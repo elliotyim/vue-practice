@@ -1,3 +1,18 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 
-# Create your tests here.
+
+class MemberTestCase(TestCase):
+    def test_sign_up(self):
+        username = 'test3'
+        email = 'test@test.com'
+        password = 'password'
+
+        client = Client()
+        response = client.post('/signup/', {
+            'username': username,
+            'email': email,
+            'password': password
+        }, 'application/json')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json().get('result'), 123)
