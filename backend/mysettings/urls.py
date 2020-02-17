@@ -10,7 +10,7 @@ handler404 = 'myapi.views.page_not_found_view'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/token/', obtain_jwt_token),
-    path('api/token/verify', verify_jwt_token),
-    path('api/token/refresh', refresh_jwt_token),
+    path('api/token/verify/', verify_jwt_token),
+    path('api/token/refresh/', refresh_jwt_token),
     path('', include('myapi.myrouter')),
 ]

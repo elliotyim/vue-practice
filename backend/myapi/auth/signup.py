@@ -1,3 +1,4 @@
+from rest_framework.exceptions import ParseError
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.utils import json
@@ -13,12 +14,17 @@ class Signup(APIView):
         """
         Managing signing up of a new member
         """
-        result = {"result": "회원가입 성공!"}
+
+        result = {"detail": "Welcome! you have signed up successfully."}
         request_body = json.loads(request.body.decode('utf-8'))
 
         username = request_body.get('username')
         email = request_body.get('email')
         password = request_body.get('password')
 
-        User.objects.create_user(username=username, email=email, password=password)
+        try:
+            User.objects.create_user(username=username, email=email, password=password)
+        except Exception as e:
+            raise ParseError(detail=e)
+
         return Response(result)
