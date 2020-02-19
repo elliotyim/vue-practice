@@ -29,3 +29,11 @@ class User(AbstractUser):
 
     objects = MyUserManager()
 
+
+class Board(models.Model):
+    title = models.CharField(max_length=30, null=False)
+    content = models.TextField(null=False)
+    author = models.OneToOneField(User, on_delete=models.CASCADE, null=False)
+
+    def __str__(self):
+        return self.title
