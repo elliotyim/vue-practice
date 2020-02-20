@@ -9,12 +9,6 @@ from myapi.serializers import UserSerializer
 class Signin(APIView):
 
     def post(self, request, *args, **kwargs):
-        # data = request.data
-        # user = authenticate(username=data['username'], password=data['password'])
-        #
-        # if user is not None:
-        #     login(request, user)
-        #     return Response({'detail': 'Signed in successfully'})
-        # else:
-        #     return Response({'detail': 'Failed signing in'}, status=400)
-        return Response()
+        data = request.data
+        queryset = User.objects.filter(username=data['username'])
+        return Response(UserSerializer(queryset).data)

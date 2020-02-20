@@ -1,55 +1,8 @@
+
 import json
 
-from django.contrib.auth.hashers import make_password
-from django.test import Client
-from rest_framework.test import APITestCase, APIClient
-from rest_framework_jwt import utils
+from rest_framework.test import APITestCase
 
-# username = 'admin'
-# email = 'test11@test.com'
-# password = '1111'
-#
-# jwt_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNTgyNzc2NDI5LCJlbWFpbCI6ImFkbWluQHRlc3QuY29tIiwib3JpZ19pYXQiOjE1ODIxNzE2Mjl9._Wm-yO3Buhs6QkuIgohFng0dufjn930pXlCnqfz25EI'
-#
-#
-# @pytest.mark.django_db
-# def test_signup():
-#     client = Client()
-#     response = client.post('/signup/', {
-#         'username': username,
-#         'email': email,
-#         'password': password
-#     }, 'application/json')
-#
-#     assert response.status_code == 200
-#
-#
-# @pytest.mark.django_db
-# def test_signup_twice():
-#     client = Client()
-#     response = client.post('/signup/', {
-#         'username': username,
-#         'email': email,
-#         'password': password
-#     }, 'application/json')
-#
-#     response = client.post('/signup/', {
-#         'username': username,
-#         'email': email,
-#         'password': password
-#     }, 'application/json')
-#
-#     assert response.status_code == 400
-#
-#
-# @pytest.mark.django_db
-# def test_login(client):
-#     response = client.post('/signin/', json={
-#         'username': username,
-#         'password': password
-#     }, HTTP_AUTHORIZATiON='jwt {}'.format(jwt_token))
-#
-#     assert response.status_code == 200
 from myapi.models import User
 
 
