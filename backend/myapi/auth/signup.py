@@ -1,3 +1,4 @@
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.exceptions import ParseError
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -10,6 +11,7 @@ from myapi.models import User
 class Signup(APIView):
     permission_classes = [AllowAny]
 
+    @csrf_exempt
     def post(self, request, *args, **kwargs):
         """
         Managing signing up of a new member

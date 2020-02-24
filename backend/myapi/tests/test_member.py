@@ -2,20 +2,10 @@ import json
 
 from rest_framework.test import APITestCase
 
-from myapi.models import User
+from myapi.tests.user_token import UserToken
 
 
-class MemberTest(APITestCase):
-    username = 'test123'
-    email = 'test123@test.com'
-    password = '1111'
-
-    def mock_user(self):
-        User.objects.create_user(
-            username=self.username,
-            email=self.email,
-            password=self.password
-        )
+class MemberTest(APITestCase, UserToken):
 
     def test_signup(self):
         """
@@ -49,19 +39,47 @@ class MemberTest(APITestCase):
 
         self.assertEqual(response.status_code, 400)
 
+    def test_signup_without_username(self):
+        response = self.client.post('/signup/', json.dumps({
+            'email': self.email,
+            'password': self.password
+        }), content_type='application/json')
+
+        self.assertEqual(response.status_code, 400)
+
+        # 에러 메시지 출력
+        self.assertEqual(response.data['detail'], 400)
+
+    def test_signup_without_password(self):
+        response = self.client.post('/signup/', json.dumps({
+            'username': self.username,
+            'email': self.email
+        }), content_type='application/json')
+
+        self.assertEqual(response.status_code, 400)
+
+        # 에러 메시지 출력
+        # self.assertEqual(response.data['detail'], 400)
+
+    def test_signup_without_email(self):
+        response = self.client.post('/signup/', json.dumps({
+            'username': self.username,
+            'password': self.password
+        }), content_type='application/json')
+
+        self.assertEqual(response.status_code, 400)
+
+        # 에러 메시지 출력
+        # self.assertEqual(response.data['detail'], 400)
+
     def test_signin(self):
         """
         Test signing in with jwt token.
         """
 
-        self.mock_user()
+        self.create_user_mock()
+        auth = self.get_jwt_token()
 
-        token = self.client.post('/api/token/', json.dumps({
-            'username': self.username,
-            'password': self.password
-        }), content_type='application/json').json()['token']
-
-        auth = 'jwt {0}'.format(token)
         response = self.client.post('/signin/', json.dumps({
             'username': self.username,
             'password': self.password
@@ -74,7 +92,7 @@ class MemberTest(APITestCase):
         Test signing in without jwt token that causes the authorization error.
         """
 
-        self.mock_user()
+        self.create_user_mock()
 
         response = self.client.post('/signin/', json.dumps({
             'username': self.username,
