@@ -1,3 +1,5 @@
+from model_mommy import mommy
+
 from myapi.models import User
 
 
@@ -6,9 +8,9 @@ class UserMock:
     email = 'test123@test.com'
     password = '1111'
 
-    def create_user_mock(self):
+    def create_user_mock(self, user):
         return User.objects.create_user(
-            username=self.username,
-            email=self.email,
-            password=self.password
+            username=user.username,
+            email=user.email,
+            password=user.password
         )
